@@ -27,9 +27,7 @@ Employee* employee_new()
 //agrego el empleado que paso por parametro
 Employee* employee_newParametros(char* idStr, char* nombreStr, char* horasTrabajadasStr, char* salarioStr)
 {
-	Employee* newEmployee = employee_new(); //aca no deberia pasarle mi empleado por paramero? daba error xq employee tiene que ser puntero
-
-	printf("pase el new newEmployee");
+	Employee* newEmployee = employee_new();
 
 	if(idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && salarioStr != NULL)
 	{
@@ -44,9 +42,6 @@ Employee* employee_newParametros(char* idStr, char* nombreStr, char* horasTrabaj
 		}
 	}
 
-	printf("Id: %s, Nombre %s, Horas %s, Sueldo %s \n", idStr, nombreStr, horasTrabajadasStr, salarioStr);
-
-
 	return newEmployee;
 }
 
@@ -56,7 +51,7 @@ int employee_setId(Employee* this, int id)
 {
 	int todoOk = 0;
 
-	if(this != NULL && id > 0 && id < 2000)
+	if(this != NULL)
 	{
 		this->id = id;
 
@@ -73,7 +68,7 @@ int employee_setNombre(Employee* this, char* nombre)
 
 	if(this != NULL && nombre != NULL)
 	{
-		if(strlen(nombre) > 2 && strlen(nombre) < 128)
+		if(strlen(nombre) >= 2 && strlen(nombre) < 128)
 		{
 			strcpy(this->nombre, nombre);
 
@@ -88,9 +83,11 @@ int employee_setHorasTrabajadas(Employee* this, int horasTrabajadas)
 {
 	int todoOk = 0;
 
-	if(this != NULL && horasTrabajadas > 0)
+	if(this != NULL)
 	{
 		this->horasTrabajadas = horasTrabajadas;
+
+		todoOk = 1;
 	}
 
 	return todoOk;
@@ -101,7 +98,7 @@ int employee_setSueldo(Employee* this, int sueldo)
 {
 	int todoOk = 0;
 
-	if(this != NULL && sueldo > 0 && sueldo < 300000)
+	if(this != NULL)
 	{
 		this->sueldo = sueldo;
 
@@ -133,8 +130,9 @@ int employee_getNombre(Employee* this, char* nombre)
 
 	if(this != NULL && nombre!= NULL)
 	{
-		nombre = this->nombre;
-		strcpy(nombre, this->nombre);
+		//nombre = this->nombre;
+		//strcpy(nombre, this->nombre);
+		strcpy(this->nombre, nombre);
 
 		todoOk = 1;
 	}
@@ -184,7 +182,7 @@ int employee_print(Employee* emp)
 
 	if(emp != NULL)
 	{
-		printf("%d, %s, %d, %d \n",
+		printf("%d %15s   %d\t   %d \n",
 				emp->id,
 				emp->nombre,
 				emp->horasTrabajadas,
@@ -196,6 +194,8 @@ int employee_print(Employee* emp)
 	return todoOk;
 
 }
+
+
 
 
 

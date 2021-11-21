@@ -8,4 +8,8 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee);
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee);
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
 
+//mis controllers
+int controller_getEmployeeById(LinkedList* lista, int id);
+
+
 
