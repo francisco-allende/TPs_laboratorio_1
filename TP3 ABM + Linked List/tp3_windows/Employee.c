@@ -130,9 +130,7 @@ int employee_getNombre(Employee* this, char* nombre)
 
 	if(this != NULL && nombre!= NULL)
 	{
-		//nombre = this->nombre;
-		//strcpy(nombre, this->nombre);
-		strcpy(this->nombre, nombre);
+		strcpy(nombre, this->nombre);
 
 		todoOk = 1;
 	}
@@ -192,7 +190,112 @@ int employee_print(Employee* emp)
 	}
 
 	return todoOk;
+}
 
+
+int employee_sortId(void* empOne, void* empTwo)
+{
+	int criterio = 0;
+	int idEmpOne;
+	int idEmpTwo;
+
+	Employee* auxEmpUno = (Employee*) empOne;
+	Employee* auxEmpTwo = (Employee*) empTwo;
+
+	if(empOne != NULL && empTwo != NULL)
+	{
+		employee_getId(auxEmpUno, &idEmpOne);
+		employee_getId(auxEmpTwo, &idEmpTwo);
+
+		if(idEmpOne > idEmpTwo)
+		{
+			criterio = 1;
+		}
+		else if(idEmpOne < idEmpTwo)
+		{
+			criterio = -1;
+		}
+	}
+
+	return criterio;
+}
+
+int employee_sortName(void* empOne, void* empTwo)
+{
+	int criterio = 0;
+	char nameEmpOne[128];
+	char nameEmpTwo[128];
+
+	Employee* auxEmpUno = (Employee*) empOne;
+	Employee* auxEmpTwo = (Employee*) empTwo;
+
+	if(empOne != NULL && empTwo != NULL)
+	{
+		employee_getNombre(auxEmpUno, nameEmpOne);
+		employee_getNombre(auxEmpTwo, nameEmpTwo);
+
+		if(strcmp(nameEmpOne, nameEmpTwo) > 0)
+		{
+			criterio = 1;
+		}
+		else if(strcmp(nameEmpOne, nameEmpTwo) < 0)
+		{
+			criterio = -1;
+		}
+	}
+	return criterio;
+}
+
+int employee_sortHours(void* empOne, void* empTwo)
+{
+	int criterio = 0;
+	int hoursEmpOne;
+	int hoursEmpTwo;
+
+	Employee* auxEmpUno = (Employee*) empOne;
+	Employee* auxEmpTwo = (Employee*) empTwo;
+
+	if(empOne != NULL && empTwo != NULL)
+	{
+		employee_getHorasTrabajadas(auxEmpUno, &hoursEmpOne);
+		employee_getHorasTrabajadas(auxEmpTwo, &hoursEmpTwo);
+
+		if(hoursEmpOne > hoursEmpTwo)
+		{
+			criterio = 1 ;
+		}
+		else if(hoursEmpOne < hoursEmpTwo)
+		{
+			criterio = -1;
+		}
+	}
+	return criterio;
+}
+
+int employee_sortSalary(void* empOne, void* empTwo)
+{
+	int criterio = 0;
+	int salaryEmpOne;
+	int salarayEmpTwo;
+
+	Employee* auxEmpUno = (Employee*) empOne;
+	Employee* auxEmpTwo = (Employee*) empTwo;
+
+	if(empOne != NULL && empTwo != NULL)
+	{
+		employee_getSueldo(auxEmpUno, &salaryEmpOne);
+		employee_getSueldo(auxEmpTwo, &salarayEmpTwo);
+
+		if(salaryEmpOne > salarayEmpTwo)
+		{
+			criterio = 1;
+		}
+		else if(salaryEmpOne < salarayEmpTwo)
+		{
+			criterio = -1;
+		}
+	}
+	return criterio;
 }
 
 

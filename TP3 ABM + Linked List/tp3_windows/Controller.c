@@ -5,6 +5,7 @@
 #include "Employee.h"
 #include "parser.h"
 #include "Controller.h"
+#include "misFunciones.h"
 
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
@@ -22,15 +23,14 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 	{
 		FILE* f = fopen(path, "r"); //abro en modo lectura
 
-		if(f!=NULL)
+		if(f != NULL)
 		{
 			todoOk = parser_EmployeeFromText(f, pArrayListEmployee);
-			//todoOk = 1;
 			fclose(f);
 		}
 		else
 		{
-			printf("No se pudo cargar el archivo\n");
+			printf("No se pudo cargar el archivo de texto\n");
 		}
 	}
 
@@ -46,7 +46,24 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 {
-	return 1;
+	int todoOk = 0;
+
+	if(path != NULL && pArrayListEmployee != NULL)
+	{
+		FILE* f = fopen(path, "rb"); //abro en modo lectura binaria
+
+		if(f != NULL)
+		{
+			todoOk = parser_EmployeeFromBinary(f, pArrayListEmployee);
+			fclose(f);
+		}
+		else
+		{
+			printf("No se pudo cargar el archivo binario\n");
+		}
+	}
+
+	return todoOk;
 }
 
 /** \brief Alta de empleados
@@ -68,6 +85,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
+		system("cls");
 		printf("***\t Alta de empleado\t ***\n\n");
 
 		//instancio al empleado y los campos de su estructura
@@ -159,11 +177,13 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 	if(pArrayListEmployee != NULL)
 	{
 
-		//busco el indice en la lista el empleado a modificar
+		system("cls");
+		printf("***\t Moidifcar datos de un empleado\t ***\n\n");
+
 		printf("Ingrese el id del empleado al cual se le modificaran los datos: \n");
 		scanf("%d", &id);
 
-		indice = controller_getEmployeeById(pArrayListEmployee, id);
+		indice = controller_getEmployeeById(pArrayListEmployee, id); //obtengo el indice del empleado segun id y valido
 
 		while(indice == -1)
 		{
@@ -172,16 +192,14 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 			indice = controller_getEmployeeById(pArrayListEmployee, id);
 		}
 
-		emp = ll_get(pArrayListEmployee, indice);
+		emp = ll_get(pArrayListEmployee, indice); //me retorna el empleado con el indice de getEmployeeById
 
 		if(emp != NULL)
 		{
 			printf("Empleado/a a modificar: \n");
 			employee_print(emp);
-
 			opcion = submenuModify();
 
-			//segun la opcion, cargo los nuevos valores al empleado/a
 			switch(opcion)
 			{
 			case 1:
@@ -189,7 +207,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 				fflush(stdin);
 				gets(newName);
 
-				while(!employee_setNombre(pArrayListEmployee, newName))
+				while(!employee_setNombre(emp, newName))
 				{
 					printf("Nombre fuera de rango, vuelva a intentar: \n");
 					fflush(stdin);
@@ -197,6 +215,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 				}
 
 				strcpy(emp->nombre, newName);
+				todoOk = 1;
 
 				break;
 
@@ -204,13 +223,14 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 				printf("Ingrese la nueva cantidad de horas trabajadas del empleado/a: \n");
 				scanf("%d", &newHorasTrabajadas);
 
-				while(!employee_setHorasTrabajadas(pArrayListEmployee, newHorasTrabajadas))
+				while(!employee_setHorasTrabajadas(emp, newHorasTrabajadas))
 				{
 					printf("Horas Trabajadas fuera de rango, vuelva a intentar: \n");
 					scanf("%d", &newHorasTrabajadas);
 				}
 
 				emp->horasTrabajadas = newHorasTrabajadas;
+				todoOk = 1;
 
 				break;
 
@@ -218,22 +238,26 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 				printf("Ingrese el nuevo sueldo del empleado/a: \n");
 				scanf("%d", &newSueldo);
 
-				while(!employee_setSueldo(pArrayListEmployee, newSueldo))
+				while(!employee_setSueldo(emp, newSueldo))
 				{
 					printf("Sueldo fuera de rango, vuelva a intentar: \n");
 					scanf("%d", &newSueldo);
 				}
 
 				emp->sueldo = newSueldo;
+				todoOk = 1;
 
+				break;
 
+			case 4:
+				printf("Modificacion cancelada\n");
+				todoOk = 0;
 				break;
 			}
 
 			system("cls");
 			printf("*** Empleado con datos modificados ***\n\n");
 			employee_print(emp);
-			todoOk = 1;
 		}
 		else
 		{
@@ -256,10 +280,14 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 	int todoOk = 0;
 	int indice;
 	int id;
+	int opcion;
 	Employee* emp = NULL;
 
 	if(pArrayListEmployee != NULL)
 	{
+		system("cls");
+		printf("***\t Baja de empleado\t ***\n\n");
+
 		//busco el indice en la lista el empleado a dar de baja
 		printf("Ingrese el id del empleado al cual desea eliminar: \n");
 		scanf("%d", &id);
@@ -277,14 +305,32 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 		emp = ll_get(pArrayListEmployee, indice);
 		employee_print(emp);
 
-		//borro el empleado enviando el indice y validado el retorno
-		if(ll_remove(pArrayListEmployee, indice) != -1)
+		printf("Esta seguro/a de que desea eliminar al empleado? \n");
+		printf("1) Si, seguro/a.\n");
+		printf("2) No, cancelar operacion.\n");
+		printf("\n\nMarque su opcion: ");
+		scanf("%d", &opcion);
+		while(opcion != 1 && opcion != 2)
 		{
-			todoOk = 1;
+			printf("Opcion incorrecta, ingrese 1 o 2: ");
+			scanf("%d", &opcion);
+		}
+		if(opcion == 1)
+		{
+
+			//borro el empleado enviando el indice y validado el retorno
+			if(ll_remove(pArrayListEmployee, indice) != -1)
+			{
+				todoOk = 1;
+			}
+			else
+			{
+				printf("Hubo un error al intentar borrar al empleado\n\n");
+			}
 		}
 		else
 		{
-			printf("Hubo un error al intentar borrar al empleado\n\n");
+			todoOk = 0;
 		}
 	}
 
@@ -332,7 +378,94 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-	return 1;
+	int todoOk = 0;
+	int opcion;
+	int criterio;
+
+	if(pArrayListEmployee != NULL)
+	{
+		system("cls");
+		printf("***\t Ordenar listado de empleado\t ***\n\n");
+
+		opcion = subMenuOrdenar();
+		criterio = subMenuCriterio();
+
+		switch(opcion)
+		{
+		case 1:
+			if(criterio == 1)
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortId, 1); //ll_sort. 1 es ascendente, 0 descedente
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			else if(criterio == 2)
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortId, 0);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			todoOk = 1;
+			break;
+
+		case 2:
+			if(criterio == 1)
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortName, 1);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			else
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortName, 0);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			todoOk = 1;
+			break;
+
+
+		case 3:
+			if(criterio == 1)
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortHours, 1);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			else
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortHours, 0);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			todoOk = 1;
+			break;
+
+
+		case 4:
+			if(criterio == 1)
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortSalary, 1);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			else
+			{
+				printf("Aguarde! Estamos ordenando la lista. Esto podria demorar unos segundos...\n\n");
+				ll_sort(pArrayListEmployee, employee_sortSalary, 0);
+				controller_ListEmployee(pArrayListEmployee);
+			}
+			todoOk = 1;
+			break;
+
+		case 5:
+			printf("Ordenamiento cancelado\n");
+			todoOk = 1;
+			break;
+		}
+	}
+
+	return todoOk;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -346,7 +479,6 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
 
 	int todoOk = 0;
-	/*
 	Employee* emp = NULL;
 	int id;
 	char nombre[128];
@@ -357,22 +489,29 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 	if(path != NULL && pArrayListEmployee != NULL)
 	{
 		FILE* f = fopen(path, "w"); //lo abro en modo escritura txt
+		emp = employee_new(); //instancio al empleado para cargar bien los getters
 
-		if(f != NULL)
+		printf("***\t Guardar archivo (modo texto)\t ***\n\n");
+
+		if(f != NULL && emp != NULL)
 		{
+			fprintf(f, "id,nombre,horasTrabajadas,sueldo\n"); //cargo la data de las columnas
+
 			for(int i = 0; i < tam; i++)
 			{
 				emp = ll_get(pArrayListEmployee, i); //me traigo un empleado por iteracion
 
-				employee_getId(emp, &id);
-				employee_getNombre(emp, nombre);
-				employee_getHorasTrabajadas(emp, &horasTrabajadas);
-				employee_getSueldo(emp, &sueldo);
+				if(emp != NULL)
+				{
+					employee_getId(emp, &id);
+					employee_getNombre(emp, nombre);
+					employee_getHorasTrabajadas(emp, &horasTrabajadas);
+					employee_getSueldo(emp, &sueldo);
 
-				fprintf(f, "%d, %s, %d, %d\n", id, nombre, horasTrabajadas, sueldo);
+					fprintf(f, "%d,%s,%d,%d\n", id, nombre, horasTrabajadas, sueldo);
+					todoOk = 1;
+				}
 			}
-
-			todoOk = 1;
 		}
 		else
 		{
@@ -381,10 +520,9 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 
 		fclose(f);
 	}
-	*/
+
 
 	return todoOk;
-
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
@@ -396,7 +534,46 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
-	return 1;
+	int todoOk = 0;
+	Employee* emp = NULL;
+	int cant;
+	int tam = ll_len(pArrayListEmployee);
+
+	if(path != NULL && pArrayListEmployee != NULL)
+	{
+		FILE* f = fopen(path, "wb"); //modo escritura binaria para guardar datos
+		emp = employee_new();
+
+
+		printf("***\t Guardar archivo (modo binario)\t ***\n\n");
+
+		if(f != NULL && emp != NULL)
+		{
+			for(int i = 0; i < tam; i++)
+			{
+				emp = ll_get(pArrayListEmployee, i);
+
+				if(emp != NULL)
+				{
+					cant = fwrite(emp, sizeof(Employee), 1, f);
+
+					if(cant)
+					{
+						todoOk = 1;
+					}
+					else
+					{
+						todoOk = 0;
+						break;
+					}
+				}
+			}
+		}
+		fclose(f);
+	}
+
+	return todoOk;
+
 }
 
 

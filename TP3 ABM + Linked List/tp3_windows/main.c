@@ -42,6 +42,7 @@ int main()
 				}
 				else
 				{
+					system("cls");
 					printf("\n***\t Carga del archivo de texto exitosa! ***\n\n");
 					flagFileTxt = 1;
 				}
@@ -53,26 +54,29 @@ int main()
 			break;
 
 		case 2:
-			if(!flagFileBin)
+			if(!flagFileBin && flagFileTxt)
 			{
-				if(!controller_loadFromBinary("data.csv", listaEmpleados))
+				if(!controller_loadFromBinary("data.bin", listaEmpleados))
 				{
 					printf("No se pudieron cargar todos los datos en binario correctamente\n\n");
 				}
 				else
 				{
+					system("cls");
 					printf("\n***\t Carga del archivo binario exitosa! ***\n\n");
 					flagFileBin = 1;
 				}
 			}
 			else
 			{
-				printf("El archivo ya fue cargado. Solo se puede cargar una vez.\n\n");
+				printf("Antes asegurese de dos cosas: \n\n");
+				printf("1) Cargue el archivo de texto antes (opcion 1)\n");
+				printf("2) El archivo binario solo se puede cargar una vez.\n\n");
 			}
 			break;
 
 		case 3:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
 				if(!controller_addEmployee(listaEmpleados))
 				{
@@ -86,14 +90,15 @@ int main()
 			break;
 
 		case 4:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
 				if(!controller_editEmployee(listaEmpleados))
 				{
-					printf("No se pudieron modificar los datos del empleado\n");
+					printf("Operacion cancelada o error al modificar los datos del empleado\n");
 				}
 				else
 				{
+					system("cls");
 					printf("*** Modificacion de datos exitosa!! ***\n");
 				}
 			}
@@ -104,7 +109,7 @@ int main()
 			break;
 
 		case 5:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
 				if(!controller_removeEmployee(listaEmpleados))
 				{
@@ -112,6 +117,7 @@ int main()
 				}
 				else
 				{
+					system("cls");
 					printf("Empleado borrado con exito\n\n");
 				}
 			}
@@ -122,7 +128,7 @@ int main()
 			break;
 
 		case 6:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
 				if(!controller_ListEmployee(listaEmpleados))
 				{
@@ -136,9 +142,17 @@ int main()
 			break;
 
 		case 7:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
-				controller_sortEmployee(listaEmpleados);
+				if(!controller_sortEmployee(listaEmpleados))
+				{
+					printf("El ordenamiento fue cancelado o algo fallo en el proceso\n");
+				}
+				else
+				{
+					system("cls");
+					printf("\n\n*** Ordenamiento exitoso! ***\n\n");
+				}
 			}
 			else
 			{
@@ -147,14 +161,15 @@ int main()
 			break;
 
 		case 8:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
 				if(!controller_saveAsText("data.csv", listaEmpleados))
 				{
-					printf("Error. No se pudo guardar el archivo\n");
+					printf("Error. No se pudo guardar el archivo modo texto\n");
 				}
 				else
 				{
+					system("cls");
 					printf("*** Archivo guardado con exito! ***\n");
 				}
 			}
@@ -165,9 +180,18 @@ int main()
 			break;
 
 		case 9:
-			if(flagFileTxt || flagFileBin)
+			if(flagFileTxt)
 			{
-				controller_saveAsBinary("data.csv", listaEmpleados);}
+				if(!controller_saveAsBinary("data.bin", listaEmpleados))
+				{
+					printf("Error. No se pudo guardar el archivo modo binario\n");
+				}
+				else
+				{
+					system("cls");
+					printf("\n\n*** Archivo guardado en modo binario con exito!! \n\n ***");
+				}
+			}
 			else
 			{
 				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
@@ -184,14 +208,9 @@ int main()
 		}
 	}while(option != 10);
 
-
+	//libero espacio en memoria
 	ll_deleteLinkedList(listaEmpleados);
-	//employee_delete(aux);
-
 	free(listaEmpleados);
-	//free(aux);
-
-
 
 	return EXIT_SUCCESS;;
 }

@@ -37,18 +37,58 @@ int submenuModify()
 	printf("Que dato desea modificar del empleado/a?\n\n");
 	printf("1) Nombre\n");
 	printf("2) Horas trabajadas\n");
-	printf("3) Sueldo\n\n");
+	printf("3) Sueldo\n");
+	printf("4) Cancelar modificacion\n\n");
 
 	printf("Marque la opcion que corresponda: \n");
 	scanf("%d", &opcion);
-	while(opcion > 3 || opcion < 1)
+	while(opcion > 4 || opcion < 1)
 	{
 		printf("Opcion incorrecta. Intente de nuevo: \n");
 		scanf("%d", &opcion);
 	}
-
 	system("cls");
 
 	return opcion;
+}
+
+int subMenuOrdenar()
+{
+	int opcion;
+
+	printf("Seleccione como quiere ordenar el listado: \n\n");
+	printf("1. Ordenar por ID\n");
+	printf("2. Ordenar por nombre\n");
+	printf("3. Ordenar por horas trabajadas\n");
+	printf("4. Ordenar por sueldo\n");
+	printf("5. Cancelar ordenamiento\n");
+
+	printf("\nOpcion seleccionada: \n");
+	scanf("%d", &opcion);
+	while(opcion > 5 || opcion < 1)
+	{
+		printf("Error, opcion inexistente. Vuelva a intentar: \n");
+		scanf("%d", &opcion);
+	}
+
+	return opcion;
+}
+
+int subMenuCriterio()
+{
+	int criterio;
+
+	printf("Seleccione el criterio de ordenamiento del listado: \n\n");
+	printf("1) Criterio ascendente\n");
+	printf("2) Criterio descendente\n");
+	printf("\nOpcion seleccionada: \n");
+	scanf("%d", &criterio);
+	while( criterio  !=1 && criterio != 2)
+	{
+		printf("Error, opcion inexistente. Vuelva a intentar: \n");
+		scanf("%d", &criterio);
+	}
+
+	return criterio;
 }
 

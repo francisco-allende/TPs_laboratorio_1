@@ -2,10 +2,10 @@
 #define employee_H_INCLUDED
 typedef struct
 {
-    int id;
-    char nombre[128];
-    int horasTrabajadas;
-    int sueldo;
+	int id;
+	char nombre[128];
+	int horasTrabajadas;
+	int sueldo;
 }Employee;
 
 Employee* employee_new();
@@ -27,5 +27,9 @@ int employee_getSueldo(Employee* this,int* sueldo);
 
 //mis funciones
 int employee_print(Employee* emp);
+int employee_sortId(void* empOne, void* empTwo);
+int employee_sortName(void* empOne, void* empTwo);
+int employee_sortHours(void* empOne, void* empTwo);
+int employee_sortSalary(void* empOne, void* empTwo);
 
 #endif // employee_H_INCLUDED
