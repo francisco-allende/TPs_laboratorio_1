@@ -10,6 +10,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
 
 //mis controllers
 int controller_getEmployeeById(LinkedList* lista, int id);
+int controller_getLastId(LinkedList* pArrayListEmployee);
 
 
 

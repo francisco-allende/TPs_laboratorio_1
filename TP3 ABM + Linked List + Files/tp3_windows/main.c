@@ -25,8 +25,8 @@ int main()
 	setbuf(stdout, NULL);
 
 	int option = 0;
-	int TXTLoaded = 0;
-	int BINLoaded = 0;
+	int TxtLoaded = 0;
+	int BinLoaded = 0;
 	char msjCarga[140] = "Asegurese antes de cargar los datos (opcion 1 o 2)\n\n";
 
 	LinkedList* listaEmpleados = ll_newLinkedList();
@@ -36,7 +36,7 @@ int main()
 		switch(menu())
 		{
 		case 1:
-			if(!TXTLoaded)
+			if(!TxtLoaded)
 			{
 				if(!controller_loadFromText("data.csv", listaEmpleados))
 				{
@@ -46,7 +46,7 @@ int main()
 				{
 					system("cls");
 					printf("\n***\t Carga del archivo de texto exitosa! ***\n\n");
-					TXTLoaded = 1;
+					TxtLoaded = 1;
 				}
 			}
 			else
@@ -56,7 +56,7 @@ int main()
 			break;
 
 		case 2:
-			if(!BINLoaded && TXTLoaded)
+			if(!BinLoaded && TxtLoaded)
 			{
 				if(!controller_loadFromBinary("data.bin", listaEmpleados))
 				{
@@ -66,19 +66,20 @@ int main()
 				{
 					system("cls");
 					printf("\n***\t Carga del archivo binario exitosa! ***\n\n");
-					BINLoaded = 1;
+					BinLoaded = 1;
 				}
 			}
 			else
 			{
-				printf("Antes asegurese de dos cosas: \n\n");
-				printf("1) Cargue el archivo de texto antes (opcion 1)\n");
-				printf("2) El archivo binario solo se puede cargar una vez.\n\n");
+				printf("Antes asegurese de: \n\n");
+				printf("1) Cargar el archivo de texto (opcion 1)\n");
+				printf("2) Si el archivo binario no existe, crearlo  (opcion 9)\n");
+				printf("3) En caso de que ya haya sido creado y cargado, el archivo binario solo se puede cargar una vez.\n\n");
 			}
 			break;
 
 		case 3:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_addEmployee(listaEmpleados))
 				{
@@ -92,7 +93,7 @@ int main()
 			break;
 
 		case 4:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_editEmployee(listaEmpleados))
 				{
@@ -111,7 +112,7 @@ int main()
 			break;
 
 		case 5:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_removeEmployee(listaEmpleados))
 				{
@@ -130,7 +131,7 @@ int main()
 			break;
 
 		case 6:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_ListEmployee(listaEmpleados))
 				{
@@ -144,7 +145,7 @@ int main()
 			break;
 
 		case 7:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_sortEmployee(listaEmpleados))
 				{
@@ -163,7 +164,7 @@ int main()
 			break;
 
 		case 8:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_saveAsText("data.csv", listaEmpleados))
 				{
@@ -182,7 +183,7 @@ int main()
 			break;
 
 		case 9:
-			if(TXTLoaded)
+			if(TxtLoaded)
 			{
 				if(!controller_saveAsBinary("data.bin", listaEmpleados))
 				{
@@ -202,12 +203,15 @@ int main()
 
 		case 10:
 			printf("Adios!");
+			option = 10;
 			break;
 
 		default:
 			printf("Error, esa opcion es inexistente. Vuelvalo a intentar \n");
 			break;
 		}
+
+		system("pause");
 	}while(option != 10);
 
 	//libero espacio en memoria

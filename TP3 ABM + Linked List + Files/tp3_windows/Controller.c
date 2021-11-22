@@ -70,7 +70,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 	int todoOk = 0;
 	Employee* newEmployee = NULL; //el empleado a dar de alta
 
-	char id[10];
+	int newEmployeeId = 0;
 	char nombre[128];
 	char sueldo[30];
 	char horasTrabajadas[30];
@@ -85,6 +85,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 		if(newEmployee != NULL)
 		{
 			//id dinamico
+			newEmployeeId =  controller_getLastId(pArrayListEmployee); //consigo el id del ultimo empleado
+			newEmployeeId++; //sumo uno
+			employee_setId(newEmployee, newEmployeeId); //se lo atribuyo a mi nuevo empleado
 
 			printf("Ingrese el nombre del empleado: ");
 			fflush(stdin);
@@ -117,9 +120,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 			}
 
 
-			//cargo los valores por parametro a cada campo del nuevo empleado
-			newEmployee = employee_newParametros(id, nombre, horasTrabajadas, sueldo);
-
 			if(ll_add(pArrayListEmployee, newEmployee) != -1)//añado el nuevo empleado a la lista y valido
 			{
 				printf("\n\n Alta del empleado con exito. Nuevo empleado cargado:\n\n ");
@@ -133,6 +133,45 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 	}
 
 	return todoOk;
+}
+
+int controller_getLastId(LinkedList* pArrayListEmployee)
+{
+	int id = -1;
+	Employee* auxId = NULL;
+	int tam = ll_len(pArrayListEmployee); //tam de la lista
+
+	if(pArrayListEmployee != NULL)
+	{
+		auxId = ll_get(pArrayListEmployee, tam-1); //uso el tam como indice
+		printf("Aguarde, estamos ordenando el listado. El empleado ingresado sera ubicado al final de la lista\n");
+		ll_sort(pArrayListEmployee, employee_sortId, 1);//ordeno en indice ascendente para ubicar al nuevo empleado
+		id = auxId->id;
+	}
+
+	return id;
+}
+
+int controller_getEmployeeById(LinkedList* lista, int id)
+{
+	int indice = -1;
+	Employee* emp = NULL;
+	int tam = ll_len(lista);
+
+	if(lista != NULL)
+	{
+		for(int i = 0; i < tam; i++)
+		{
+			emp = ll_get(lista, i);
+
+			if(id == emp->id)
+			{
+				indice = ll_indexOf(lista, emp);
+			}
+		}
+	}
+
+	return indice;
 }
 
 /** \brief Modificar datos de empleado
@@ -533,27 +572,3 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	return todoOk;
 
 }
-
-
-int controller_getEmployeeById(LinkedList* lista, int id)
-{
-	int indice = -1;
-	Employee* emp = NULL;
-	int tam = ll_len(lista);
-
-	if(lista != NULL)
-	{
-		for(int i = 0; i < tam; i++)
-		{
-			emp = ll_get(lista, i);
-
-			if(id == emp->id)
-			{
-				indice = ll_indexOf(lista, emp);
-			}
-		}
-	}
-
-	return indice;
-}
-
