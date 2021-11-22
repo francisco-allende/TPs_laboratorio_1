@@ -44,16 +44,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 						break;
 					}
 				}
-				else
-				{
-					printf("Ups! Algo fallo en el proceso de carga de empleados.\n\n");
-					break;
-				}
-			}
-			else
-			{
-				printf("No se pudieron cargar correctamente todos los archivos.\n\n");
-				break;
 			}
 		}
 	}
@@ -77,7 +67,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	{
 		while(!feof(pFile))
 		{
-			auxEmployee = employee_new(); //instancio el empleado los empleados que cargo
+			auxEmployee = employee_new(); //instancio en cada iteracion los empleados que cargo
 
 			if(auxEmployee != NULL)
 			{

@@ -23,18 +23,20 @@
 int main()
 {
 	setbuf(stdout, NULL);
+
 	int option = 0;
-	int flagFileTxt = 0;
-	int flagFileBin = 0;
+	int TXTLoaded = 0;
+	int BINLoaded = 0;
+	char msjCarga[140] = "Asegurese antes de cargar los datos (opcion 1 o 2)\n\n";
 
 	LinkedList* listaEmpleados = ll_newLinkedList();
 
 
 	do{
-		switch(option = menu(option))
+		switch(menu())
 		{
 		case 1:
-			if(!flagFileTxt)
+			if(!TXTLoaded)
 			{
 				if(!controller_loadFromText("data.csv", listaEmpleados))
 				{
@@ -44,7 +46,7 @@ int main()
 				{
 					system("cls");
 					printf("\n***\t Carga del archivo de texto exitosa! ***\n\n");
-					flagFileTxt = 1;
+					TXTLoaded = 1;
 				}
 			}
 			else
@@ -54,7 +56,7 @@ int main()
 			break;
 
 		case 2:
-			if(!flagFileBin && flagFileTxt)
+			if(!BINLoaded && TXTLoaded)
 			{
 				if(!controller_loadFromBinary("data.bin", listaEmpleados))
 				{
@@ -64,7 +66,7 @@ int main()
 				{
 					system("cls");
 					printf("\n***\t Carga del archivo binario exitosa! ***\n\n");
-					flagFileBin = 1;
+					BINLoaded = 1;
 				}
 			}
 			else
@@ -76,7 +78,7 @@ int main()
 			break;
 
 		case 3:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_addEmployee(listaEmpleados))
 				{
@@ -85,12 +87,12 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
 		case 4:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_editEmployee(listaEmpleados))
 				{
@@ -104,12 +106,12 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
 		case 5:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_removeEmployee(listaEmpleados))
 				{
@@ -123,12 +125,12 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
 		case 6:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_ListEmployee(listaEmpleados))
 				{
@@ -137,12 +139,12 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
 		case 7:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_sortEmployee(listaEmpleados))
 				{
@@ -156,12 +158,12 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
 		case 8:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_saveAsText("data.csv", listaEmpleados))
 				{
@@ -175,12 +177,12 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
 		case 9:
-			if(flagFileTxt)
+			if(TXTLoaded)
 			{
 				if(!controller_saveAsBinary("data.bin", listaEmpleados))
 				{
@@ -194,7 +196,7 @@ int main()
 			}
 			else
 			{
-				printf("Asegurese antes de cargar los datos (opcion 1 o 2)\n\n");
+				printf("%s ", msjCarga);
 			}
 			break;
 
