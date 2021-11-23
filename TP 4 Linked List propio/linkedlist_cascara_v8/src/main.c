@@ -1,36 +1,16 @@
-/*
-    utest example : Unit test examples.
-    Copyright (C) <2018>  <Mauricio Davila>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "../testing/inc/main_test.h"
 #include "../inc/LinkedList.h"
+//#include "LinkedList.h"
+#include "Controller.h"
+#include "Employee.h"
+#include "misFunciones.h"
 
 
-int menu();
-
-int main(void)
+int main()
 {
-    char seguir = 's';
-    int opcion;
-
     /*
     startTesting(1);  // ll_newLinkedList
     startTesting(2);  // ll_len
@@ -53,188 +33,315 @@ int main(void)
     startTesting(19); // ll_sort
     */
 
+    int option = 0;
+    int TxtLoaded = 0;
+    int BinLoaded = 0;
+    char msjCarga[140] = "Asegurese antes de cargar los datos (opcion 1 o 2)\n\n";
+
+    LinkedList* listaEmpleados = ll_newLinkedList();
+    LinkedList* listSalariesOver31k = NULL;
+    LinkedList* listaCopia = NULL;
+    LinkedList* listaCortada = NULL;
+
+
 
     do
     {
-        opcion = menu();
-
-        switch(opcion)
+        switch(menu())
         {
         case 1:
-            system("cls");
-            startTesting(1);  // ll_newLinkedList
+            if(ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_loadFromText("data.csv", listaEmpleados))
+                {
+                    printf("No se pudieron cargar todos los datos en texto correctamente\n\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("\n***\t Carga del archivo de texto exitosa! ***\n\n");
+                    TxtLoaded = 1;
+                }
+            }
+            else
+            {
+                printf("El archivo ya fue cargado. Solo se puede cargar una vez.\n\n");
+            }
             break;
 
         case 2:
-            system("cls");
-            startTesting(2);  // ll_len
+            if(!BinLoaded && TxtLoaded && !ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_loadFromBinary("data.bin", listaEmpleados))
+                {
+                    printf("Ups! Hubo un error. Dos cosas pudieron haber pasado: \n");
+                    printf("1) Si el archivo binario no existe, crearlo  (opcion 9)\n");
+                    printf("2) No se pudieron cargar todos los datos en binario correctamente\n\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("\n***\t Carga del archivo binario exitosa! ***\n\n");
+                    BinLoaded = 1;
+                }
+            }
+            else
+            {
+                printf("Antes asegurese de: \n\n");
+                printf("1) Cargar el archivo de texto (opcion 1)\n");
+                printf("2) Si el archivo binario no existe, crearlo  (opcion 9)\n");
+                printf("3) En caso de que ya haya sido creado y cargado, el archivo binario solo se puede cargar una vez.\n\n");
+            }
             break;
 
         case 3:
-            system("cls");
-            startTesting(3);  // getNode - test_getNode
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_addEmployee(listaEmpleados))
+                {
+                    printf("No se pudo dar de alta al nuevo empleado\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 4:
-            system("cls");
-            startTesting(4);  // addNode - test_addNode
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_editEmployee(listaEmpleados))
+                {
+                    printf("Operacion cancelada o error al modificar los datos del empleado\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("*** Modificacion de datos exitosa!! ***\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 5:
-            system("cls");
-            startTesting(5);  // ll_add
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_removeEmployee(listaEmpleados))
+                {
+                    printf("Error. No se pudo borrar al empleado\n\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("Empleado borrado con exito\n\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 6:
-            system("cls");
-            startTesting(6);  // ll_get
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_ListEmployee(listaEmpleados))
+                {
+                    printf("Hubo un problema al listar los empleados.\n\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
+
         case 7:
-            system("cls");
-            startTesting(7);  // ll_set
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_sortEmployee(listaEmpleados))
+                {
+                    printf("El ordenamiento fue cancelado o algo fallo en el proceso\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("\n\n*** Ordenamiento exitoso! ***\n\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 8:
-            system("cls");
-            startTesting(8);  // ll_remove
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_saveAsText("data.csv", listaEmpleados))
+                {
+                    printf("Error. No se pudo guardar el archivo modo texto\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("*** Archivo guardado con exito! ***\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 9:
-            system("cls");
-            startTesting(9);  // ll_clear
+            if(!ll_isEmpty(listaEmpleados) || !TxtLoaded)
+            {
+                if(!controller_saveAsBinary("data.bin", listaEmpleados))
+                {
+                    printf("Error. No se pudo guardar el archivo modo binario\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("\n\n*** Archivo guardado en modo binario con exito!! \n\n ***");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 10:
-            system("cls");
-            startTesting(10); // ll_deleteLinkedList
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                listSalariesOver31k = ll_filter(listaEmpleados, employee_filterSalariesOver31k);
+                controller_ListEmployee(listSalariesOver31k);
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 11:
-            system("cls");
-            startTesting(11); // ll_indexOf
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_clearList(listaEmpleados))
+                {
+                    printf("No se pudo borrar el contenido de la lista\n");
+                }
+                else
+                {
+                    system("cls");
+                    printf("\n\n*** Lista vaciada con exito ***\n\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 12:
-            system("cls");
-            startTesting(12); // ll_isEmpty
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                listaCopia = ll_clone(listaEmpleados);
+                if(listaCopia == NULL)
+                {
+                    printf("Error, no se pudo crear la copia\n");
+                }
+                else
+                {
+                    printf("***\n Lista copiada con exito! ***\n");
+
+                    if(ll_containsAll(listaEmpleados, listaCopia) == 1) //corroboro que la copia sea fiel a la original
+                    {
+                        printf("Copia fiel, ambas listas coinciden!\n");
+                    }
+                    else if(!ll_containsAll(listaEmpleados, listaCopia))
+                    {
+                        printf("No coinciden ambas listas\n");
+                    }
+                    else
+                    {
+                        printf("No se pudo realizar la operacion\n");
+                    }
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 13:
-            system("cls");
-            startTesting(13); // ll_push
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                listaCortada = controller_cutList(listaEmpleados);
+
+                if(listaCortada != NULL)
+                {
+                    controller_ListEmployee(listaCortada);
+                    printf("\n*** Lista cortada con exito! ***\n");
+                }
+                else
+                {
+                    printf("\n Error, no se pudo cortar una nueva lista \n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 14:
-            system("cls");
-            startTesting(14); // ll_pop
+            if(!ll_isEmpty(listaEmpleados))
+            {
+                if(!controller_removeByIndex(listaEmpleados))
+                {
+                    printf("No se pudo borrar al empleado\n");
+                }
+                else
+                {
+                    printf("\n\n*** Corroboracion exitosa. El empleado no se encuentra en la lista original ***\n\n");
+                }
+            }
+            else
+            {
+                printf("%s ", msjCarga);
+            }
             break;
 
         case 15:
-            system("cls");
-            startTesting(15); // ll_contains
-            break;
-
-        case 16:
-            system("cls");
-            startTesting(16); // ll_containsAll
-            break;
-
-        case 17:
-            system("cls");
-            startTesting(17); // ll_subList
-            break;
-
-        case 18:
-            system("cls");
-            startTesting(18); // ll_clone
-            break;
-
-        case 19:
-            system("cls");
-            startTesting(19); // ll_sort
-            break;
-
-        case 20:
-            system("cls");
-            seguir = 'n';
-            printf("Adios!\n\n");
+            printf("\n\nAdios!\n\n");
+            option = -1;
             break;
 
         default:
-            system("cls");
-            printf("Opcion inexistente, vuelva a intentar\n\n");
+            printf("Error, esa opcion es inexistente. Vuelvalo a intentar \n");
             break;
         }
+
+        system("pause");
     }
-    while(seguir == 's');
+    while(option != -1);
+
+    //libero espacio en memoria
+    ll_deleteLinkedList(listaEmpleados);
+    ll_deleteLinkedList(listSalariesOver31k);
+    ll_deleteLinkedList(listaCopia);
+    ll_deleteLinkedList(listaCortada);
+    free(listaEmpleados);
 
     return 0;
 }
-
-int menu()
-{
-    int opcion;
-
-    printf("************************************\n");
-    printf("******    LinkedList Menu     ******\n");
-    printf("***********************************\n\n");
-
-    printf("1) Crear una lista\n");
-    printf("2) Obtener la longitud de la lista (la cantidad de elementos)\n");
-    printf("3) Obtener un elemento de la lista\n");
-    printf("4) Añadir un nodo a la lista\n");
-    printf("5) Añadir un nodo a la lista\n");
-    printf("6) Obtener un elemento de la lista\n");
-    printf("7) Modificar un elemento de la lista\n");
-    printf("8) Eliminar un elemento de la lista\n");
-    printf("9) Eliminar todos los elementos de la lista\n");
-    printf("10) Eliminar todos los elementos y a la lista en si\n");
-    printf("11) Buscar el indice de un elemento\n");
-    printf("12) Corroborar si la lista esta o no vacia\n");
-    printf("13) Inserta un nuevo elemento en la lista en la posicion indicada\n");
-    printf("14) Eliminar el elemento de la posicion indicada\n");
-    printf("15) Determina si la lista contiene o no el elemento\n");
-    printf("16) Determina si todos los elementos de la lista estan en la lista2\n");
-    printf("17) Crear lista con nuevos elementos\n");
-    printf("18) Clonar lista con nuevos elementos\n");
-    printf("19) Ordenar lista\n");
-    printf("20) Salir\n\n");
-
-    printf("\n\nMarque la opcion: ");
-    fflush(stdin);
-    scanf("%d", &opcion);
-
-    return opcion;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

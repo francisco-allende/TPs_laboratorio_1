@@ -172,22 +172,7 @@ int ll_add(LinkedList* this, void* pElement)
 {
     return addNode(this, ll_len(this), pElement); //la funcion addNode ya la tengo hecha. Solo la llamo pasando los parametros correctos.
 }
-/*
-Version larga
-int returnAux = -1;
-int tam = ll_len(this);
 
-
-if(this != NULL)
-{
-    addNode(this, tam, pElement);
-
-    returnAux = 0;
-}
-
-return returnAux;
-}
-*/
 
 /** \brief Permite obtener un elemento de la lista
  *
@@ -291,19 +276,9 @@ int ll_remove(LinkedList* this,int index)
 int ll_clear(LinkedList* this)
 {
     int returnAux = -1;
-    int tam = ll_len(this);
 
-    //solucion mas intuitiva que yo haria
     if(this != NULL)
     {
-        for(int i = 0; i < tam; i++)
-        {
-            if(ll_remove(this, i) == -1)
-            {
-                break;
-            }
-        }
-        /* solucion de baus
         while(ll_len(this) > 0)
         {
             returnAux = ll_remove(this, 0);
@@ -312,7 +287,7 @@ int ll_clear(LinkedList* this)
                 break;
             }
         }
-        */
+
         returnAux = 0;
     }
 
@@ -578,25 +553,33 @@ int ll_sort(LinkedList* this, int (*pFunc)(void*,void*), int order)
 
 LinkedList* ll_filter(LinkedList* this, int(*pFunc)(void*))
 {
-    LinkedList* filterArray = NULL;
+    LinkedList* filterList = NULL;
     int tam = ll_len(this);
+    void* aux = NULL;
 
     if(this != NULL && pFunc != NULL)
     {
-        filterArray = ll_newLinkedList();
-        if(filterArray != NULL)
+        filterList = ll_newLinkedList();
+
+        if(filterList != NULL)
         {
             for(int i = 0; i < tam; i++)
             {
-                if(pFunc(ll_get(this, i)))
+                aux = ll_get(this, i);
+
+                if(pFunc(aux)) //retorna 1 si la carga a la filter list, 0 sino cumple los requisitos
                 {
-                    ll_add(filterArray, ll_get(this, i));
+                    if(ll_add(filterList, aux)) //en caso de que no se pueda cargar
+                    {
+                        ll_deleteLinkedList(filterList);
+                        filterList = NULL;
+                        break;
+                    }
                 }
             }
         }
     }
 
-    return filterArray;
-
+    return filterList;
 }
 
