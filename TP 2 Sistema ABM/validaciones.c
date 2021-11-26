@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "empleados.h"
+#include "validaciones.h"
 
 #define NO 0
 #define SI 1

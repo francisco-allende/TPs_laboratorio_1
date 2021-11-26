@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "empleados.h"
 #include "dataSectores.h"
+#include "otrasFunciones.h"
 
 #define VACIA 0
 #define LLENA 1
@@ -73,7 +74,7 @@ int main()
                 break;
 
             case 2:
-                if(flagAltaCargada)
+                if(flagAltaCargada && listHasEmployees(arrayEmployee, TAM))
                 {
                     system("cls");
                     printf("\n\n************ Baja empleado/a ************\n\n");
@@ -110,7 +111,7 @@ int main()
                 break;
 
             case 3:
-                if(flagAltaCargada)
+                if(flagAltaCargada && listHasEmployees(arrayEmployee, TAM))
                 {
                     system("cls");
                     printf("\n\n************ Modificar datos de un empleado/a ************\n\n");
@@ -153,7 +154,7 @@ int main()
                 break;
 
             case 4:
-                if(flagAltaCargada)
+                if(flagAltaCargada && listHasEmployees(arrayEmployee, TAM))
                 {
                     if(!subMenu(&subOpcion))
                     {

@@ -91,7 +91,7 @@
 	"empleados.h"
 	"dataWarehouse.h"
 
-1637958454 c:\users\usuario\desktop\tp 2 sistema abm - copia\empleados.h
+1637970014 c:\users\usuario\desktop\tp 2 sistema abm - copia\empleados.h
 	"dataSectores.h"
 
 1634095543 c:\users\usuario\desktop\tp 2 sistema abm - copia\datasectores.h
@@ -99,28 +99,41 @@
 1633749138 c:\users\usuario\desktop\tp 2 sistema abm - copia\datawarehouse.h
 	"empleados.h"
 
-1637959629 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\empleados.c
+1637970132 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\empleados.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"empleados.h"
+	"validaciones.h"
+	"otrasFunciones.h"
 
-1634591596 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\main.c
+1637970126 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\main.c
 	<stdio.h>
 	<stdlib.h>
 	"empleados.h"
 	"dataSectores.h"
+	"otrasFunciones.h"
 
-1637960084 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\validaciones.c
+1637969683 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\validaciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"empleados.h"
+	"validaciones.h"
 
 1637957052 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\datasectores.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"dataSectores.h"
+
+1637968644 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\otrasfunciones.c
+	<stdio.h>
+	<stdlib.h>
+	"otrasFunciones.h"
+
+1637968624 c:\users\usuario\desktop\tp 2 sistema abm - copia\otrasfunciones.h
+
+1637969698 c:\users\usuario\desktop\tp 2 sistema abm - copia\validaciones.h
 

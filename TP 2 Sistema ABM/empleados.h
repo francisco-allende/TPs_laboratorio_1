@@ -16,14 +16,6 @@ struct
 #endif // EMPLEADOS_H_INCLUDED
 
 
-/** \brief main menu. Gives you five options and ask you to choose one
- *
- * \param opcion int*
- * \return int
- *
- */
-int menu(int* opcion);
-
 /** \brief imprime el array de empleados de forma encolumnada
  *
  * \param lista eEmployee*
@@ -87,23 +79,6 @@ int nameLengthValidation(char* name);
  */
 int lastNameLengthValidation(char* lastName);
 
-/** \brief validates worker's salary
- *
- * \param salary float
- * \return int
- *
- */
-int salaryValidation(float salary);
-
-/** \brief validates worker's sector
- *
- * \param sector int
- * \param tamSec int
- * \param sectores[] eSector
- * \return int
- *
- */
-int sectorValidation(int empleadoSector, int tamSec, eSector sectores[]);
 
 /** \brief Busca un empleado recibiendo como parámetro de búsqueda su Id.
  *
@@ -128,13 +103,6 @@ int findEmployeeById(eEmployee* lista, int tam, int* id);
  */
 int removeEmployee(eEmployee* lista, int tam, int indice , float* acumulador, int* contador);
 
-/** \brief validates id's range (1000 to 2000)
- *
- * \param id int*
- * \return int
- *
- */
-int idRangeValidation(int* id);
 
 /** \brief prints only one employee with all his charactersitics
  *
@@ -147,13 +115,6 @@ int idRangeValidation(int* id);
  */
 int printEmployee(eEmployee* lista, int indice, eSector sectores[], int tamSec);
 
-/** \brief validates if the option to modify is correct
- *
- * \param opcion int*
- * \return int
- *
- */
-int validateOptionModifing(int* opcion);
 
 /** \brief modifies up to four characteristics of one worker (name, last name, salary and sector)
  *
@@ -168,29 +129,6 @@ int validateOptionModifing(int* opcion);
  */
 int modifyEmployee(eEmployee* lista, int indice, int* opcion, eSector sectores[], int tamSec, float* acumulador);
 
-/** \brief validates that seguir char is a proper valid char (s/n)
- *
- * \param seguir char
- * \return int
- *
- */
-int validateSeguir(char seguir);
-
-/** \brief users chooses one worker's id
- *
- * \param id int*
- * \return int
- *
- */
-int askForId(int* id);
-
-/** \brief user chooses what to change within four options
- *
- * \param opcion int*
- * \return int
- *
- */
-int askForOptionToModify(int* opcion);
 
 /** \brief saves in memory the worker's name
  *
@@ -225,13 +163,6 @@ void ingresarSalario(eEmployee auxEmpleado);
  */
 void ingresarSector(eEmployee auxEmpleado);
 
-/** \brief users decides a declining or ascendant criteria.
- *
- * \param opcion int*
- * \return int
- *
- */
-int subMenu(int* opcion);
 
 /** \brief Ordena el array de empleados por apellido y sector de manera ascendente o descendente.
  *
@@ -242,6 +173,16 @@ int subMenu(int* opcion);
  *
  */
 int sortEmployees(eEmployee* lista, int tam, int* opcion);
+
+
+/** \brief checks if there is at list one employee on the list
+ *
+ * \param lista eEmployee*
+ * \param tam int
+ * \return int 1 if there's at list one employee, 0 if there's none (the list is empty)
+ *
+ */
+int listHasEmployees(eEmployee* lista, int tam);
 
 /** \brief calculates the average salary for the report
  *
@@ -296,33 +237,6 @@ void tableText();
  */
 void greenText();
 
-/** \brief valida que sea una cadena de caracteres solo con caracteres y del largo adecuado
- *
- * \param cadena char*
- * \param minimo int
- * \param maximo int
- * \return int
- *
- */
-int validarChar(char* cadena, int minimo, int maximo);
-
-/** \brief valida que sea solo letras
- *
- * \param
- * \param
- * \return
- *
- */
-
-int esSoloLetras(char str[]);
-
-/** \brief valida si hay o no numeros en la cadena
- *
- * \param str[] char
- * \return int
- *
- */
-int esNumerico(char str[]);
 
 
 
