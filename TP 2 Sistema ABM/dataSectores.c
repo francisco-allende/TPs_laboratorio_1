@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dataSector.h"
+#include "dataSectores.h"
 
 #define TAMSEC 6
 
@@ -30,13 +30,13 @@ void hardcodearSectores(eSector sectores[], int tamSec)
 }
 
 
-int cargarDescripcionSector(eSector sectores[], int tamSec, int idSector, char* descripcion)
+int cargarDescripcionSector(eSector sectores[], int tamSer, int idSector, char* descripcion)
 {
     int todoOk = 0;
 
     if(sectores != NULL && tamSec > 0 && idSector != NULL && descripcion != NULL)
     {
-        for(int i = 0; i < tamSec; i++)
+        for(int i = 0; i < tamSer; i++)
         {
             if(sectores[i].id == idSector)
             {

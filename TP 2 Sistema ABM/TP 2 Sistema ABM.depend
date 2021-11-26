@@ -1,0 +1,86 @@
+# depslib dependency file v1.0
+1633721843 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\funcionmenu.c
+	<stdio.h>
+	<stdlib.h>
+	"mainHead.h"
+
+1633723779 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\mainhead.h
+
+1634128153 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\main.c
+	<stdio.h>
+	<stdlib.h>
+	"empleados.h"
+	"dataSectores.h"
+
+1634083516 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\datawarehouse.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+	"dataWarehouse.h"
+
+1633749138 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\datawarehouse.h
+	"empleados.h"
+
+1634128553 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\empleados.h
+	"dataSectores.h"
+
+1634128902 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+
+1634096660 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\datasectores.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"dataSectores.h"
+
+1634095543 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\datasectores.h
+
+1634128891 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp2\tp 2 sistema abm\validaciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+
+1634096660 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\datasectores.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"dataSectores.h"
+
+1634095543 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\datasectores.h
+
+1634083516 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\datawarehouse.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+	"dataWarehouse.h"
+
+1634186375 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\empleados.h
+	"dataSectores.h"
+
+1633749138 c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\datawarehouse.h
+	"empleados.h"
+
+1634184884 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+
+1634140226 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\validaciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+
+1634591596 source:c:\users\usuario\desktop\utn tecnicatura\1er cuatri\programacion y lab i\tps\tp 2\tp 2 sistema abm\main.c
+	<stdio.h>
+	<stdlib.h>
+	"empleados.h"
+	"dataSectores.h"
+

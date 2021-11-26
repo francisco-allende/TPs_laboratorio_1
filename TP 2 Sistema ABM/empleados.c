@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ArrayEmployees.h"
+#include "empleados.h"
 
 #define NO 0
 #define SI 1

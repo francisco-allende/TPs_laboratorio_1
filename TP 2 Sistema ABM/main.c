@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ArrayEmployees.h"
-#include "dataSector.h"
+#include "empleados.h"
+#include "dataSectores.h"
 
 #define VACIA 0
 #define LLENA 1
@@ -11,8 +11,6 @@
 
 int main()
 {
-	setbuf(stdout, NULL);
-
     int opcion;
     int flagAltaCargada;
     int freePosition;
@@ -227,5 +225,5 @@ int main()
     }
     while(seguir == 's');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
