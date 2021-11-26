@@ -34,7 +34,7 @@ int cargarDescripcionSector(eSector sectores[], int tamSer, int idSector, char* 
 {
     int todoOk = 0;
 
-    if(sectores != NULL && tamSec > 0 && idSector != NULL && descripcion != NULL)
+    if(sectores != NULL && tamSer > 0 && descripcion != NULL)
     {
         for(int i = 0; i < tamSer; i++)
         {

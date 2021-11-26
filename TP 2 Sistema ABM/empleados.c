@@ -5,6 +5,8 @@
 
 #define NO 0
 #define SI 1
+#define MIN 2
+#define MAX 25
 
 int menu(int* opcion)
 {
@@ -86,9 +88,9 @@ int addEmployee(eEmployee* lista, int tam, int indiceLibre, int* pId, int tamSec
         printf("Ingrese el nombre del empleado/a: ");
         fflush(stdin);
         gets(auxEmpleado.name);
-        while(!nameLengthValidation(auxEmpleado.name))
+        while(!validarChar(auxEmpleado.name, MIN, MAX))
         {
-            printf("Nombre demasiado largo. Vuelva a intenar: ");
+            printf("Incorrecto, vuelva a intentar: ");
             fflush(stdin);
             gets(auxEmpleado.name);
         }
@@ -96,9 +98,9 @@ int addEmployee(eEmployee* lista, int tam, int indiceLibre, int* pId, int tamSec
         printf("Ingrese el apellido del empleado/a: ");
         fflush(stdin);
         gets(auxEmpleado.lastName);
-        while(!lastNameLengthValidation(auxEmpleado.lastName))
+        while(!validarChar(auxEmpleado.lastName, MIN, MAX))
         {
-            printf("Apellido demasiado largo. Vuelva a intenar: ");
+            printf("Incorrecto, vuelva a intentar, vuelva a intenar: ");
             fflush(stdin);
             gets(auxEmpleado.lastName);
         }
@@ -124,6 +126,7 @@ int addEmployee(eEmployee* lista, int tam, int indiceLibre, int* pId, int tamSec
         printf("Ingrese el sector laboral del empleado/a: ");
         fflush(stdin);
         scanf("%d", &auxEmpleado.sector);
+
         while(!sectorValidation(auxEmpleado.sector, tamSec, sectores))
         {
             printf("Ese sector es inexistente. Vuelva a intentar: ");
@@ -131,14 +134,14 @@ int addEmployee(eEmployee* lista, int tam, int indiceLibre, int* pId, int tamSec
             scanf("%d", &auxEmpleado.sector);
         }
 
+        todoOk = 1;
+
         //acumulo edady cuento para el informe salarial
         *acumulador+= (float) auxEmpleado.salary;
         (*contador)++;
 
         auxEmpleado.isEmpty = NO;
         lista[indiceLibre] = auxEmpleado;
-
-        todoOk = 1;
     }
 
     return todoOk;
@@ -189,14 +192,25 @@ int askForId(int* id)
         printf("Ingrese el id del empleado/a para continuar con la operacion: ");
         fflush(stdin);
         scanf("%d", id);
-        while(!idRangeValidation(id))
+
+        if(!idRangeValidation(id))
         {
             printf("Id del empleado/a fuera del rango valido 1000 - 2000. Reingrese el id: ");
             fflush(stdin);
             scanf("%d", id);
+            if(!idRangeValidation(id))
+            {
+                printf("Fuera de rango. Volvemos al menu principal \n\n");
+            }
+            else
+            {
+                todoOk = 1;
+            }
         }
-
-        todoOk = 1;
+        else
+        {
+            todoOk = 1;
+        }
     }
 
     return todoOk;
@@ -215,11 +229,25 @@ int askForOptionToModify(int* opcion)
         printf("Ingrese el dato a modificar segun el numero de opcion: ");
         fflush(stdin);
         scanf("%d", opcion);
-        while(!validateOptionModifing(opcion))
+
+        if(!validateOptionModifing(opcion))
         {
             printf("Opcion incorrecta, ingrese dato de nuevo: ");
             fflush(stdin);
             scanf("%d", opcion);
+
+            if(!validateOptionModifing(opcion))
+            {
+                  printf("Opcion incorrecta. Volvemos al menu principal \n\n");
+            }
+            else
+            {
+                todoOk = 1;
+            }
+        }
+        else
+        {
+            todoOk = 1;
         }
 
         todoOk = 1;
@@ -249,7 +277,7 @@ int modifyEmployee(eEmployee* lista, int indice, int* opcion, eSector sectores[]
                 printf("Ingrese el nuevo nombre: ");
                 fflush(stdin);
                 gets(auxEmpleado.name);
-                while(!nameLengthValidation(auxEmpleado.name))
+                while(!validarChar(auxEmpleado.name, MIN, MAX))
                 {
                     printf("Nombre demasiado largo. Vuelva a intenar: ");
                     fflush(stdin);
@@ -261,7 +289,7 @@ int modifyEmployee(eEmployee* lista, int indice, int* opcion, eSector sectores[]
                 printf("Ingrese el nuevo apellido del empleado/a: ");
                 fflush(stdin);
                 gets(auxEmpleado.lastName);
-                while(!lastNameLengthValidation(auxEmpleado.lastName))
+                while(!validarChar(auxEmpleado.lastName, MIN, MAX))
                 {
                     printf("Apellido demasiado largo. Vuelva a intenar: ");
                     fflush(stdin);

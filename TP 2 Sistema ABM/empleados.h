@@ -296,3 +296,33 @@ void tableText();
  */
 void greenText();
 
+/** \brief valida que sea una cadena de caracteres solo con caracteres y del largo adecuado
+ *
+ * \param cadena char*
+ * \param minimo int
+ * \param maximo int
+ * \return int
+ *
+ */
+int validarChar(char* cadena, int minimo, int maximo);
+
+/** \brief valida que sea solo letras
+ *
+ * \param
+ * \param
+ * \return
+ *
+ */
+
+int esSoloLetras(char str[]);
+
+/** \brief valida si hay o no numeros en la cadena
+ *
+ * \param str[] char
+ * \return int
+ *
+ */
+int esNumerico(char str[]);
+
+
+

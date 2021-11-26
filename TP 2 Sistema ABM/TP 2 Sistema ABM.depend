@@ -84,3 +84,43 @@
 	"empleados.h"
 	"dataSectores.h"
 
+1634083516 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\datawarehouse.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+	"dataWarehouse.h"
+
+1637958454 c:\users\usuario\desktop\tp 2 sistema abm - copia\empleados.h
+	"dataSectores.h"
+
+1634095543 c:\users\usuario\desktop\tp 2 sistema abm - copia\datasectores.h
+
+1633749138 c:\users\usuario\desktop\tp 2 sistema abm - copia\datawarehouse.h
+	"empleados.h"
+
+1637959629 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"empleados.h"
+
+1634591596 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\main.c
+	<stdio.h>
+	<stdlib.h>
+	"empleados.h"
+	"dataSectores.h"
+
+1637960084 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\validaciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"empleados.h"
+
+1637957052 source:c:\users\usuario\desktop\tp 2 sistema abm - copia\datasectores.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"dataSectores.h"
+
